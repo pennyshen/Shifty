@@ -1,4 +1,4 @@
-.container {
+.container_mine {
     position:fixed;
     padding:0;
     margin:0;
@@ -40,7 +40,7 @@
 }
 
 .tryAgain {
-    margin-top: 50px;
+    margin-top: 35px;
     font-size: 25px;
     display: inline-block;
     padding: 8px 20px;
@@ -50,6 +50,14 @@
 .clickable:hover {
     background: #ffd899;
     cursor: pointer;
+}
+
+.progress.progress-color {
+    background-color: #b5b5b5;
+}
+
+.progress-bar.progress-bar-color {
+    background-color: #9a1515;
 }
 
 .quizWord {
@@ -72,7 +80,7 @@
 }
 
 .quizInstruction {
-    padding-top: 90px;
+    padding-top: 70px;
 }
 
 .resultHeader {

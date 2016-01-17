@@ -6,7 +6,10 @@
 
   <title>Shifty</title>
   <meta name="description" content="Take a short quiz to find out when you use which shift key!">
+  <link rel="shortcut icon" href="shift_key_icon.png" type="image/png">
+
   <link rel="stylesheet" type="text/css" href="css/styles.css?v=1.0">
+  <link rel="stylesheet" type="text/css" href="css/bootstrap.min.css">
   <link href='https://fonts.googleapis.com/css?family=Roboto+Mono' rel='stylesheet' type='text/css'>
   <link href='https://fonts.googleapis.com/css?family=Lato' rel='stylesheet' type='text/css'>
   <link href='https://fonts.googleapis.com/css?family=PT+Mono' rel='stylesheet' type='text/css'>
@@ -14,7 +17,7 @@
 
 
 <body>
-<div class="container">
+<div class="container_mine">
   <div class="landing" id="landing">
     <div class="description">Take a short quiz to find out <br> when you use which shift key!</div>
     <div class="startQuiz clickable button" onclick="showQuiz(); startQuiz();" id="startQuizButton">
@@ -24,6 +27,10 @@
 
   <div id="quiz" class="quiz hide">
     <div class="quizHeader" id="quizPrompt">
+      <div class="progress progress-color">
+        <div id="progress-bar" class="progress-bar progress-bar-color" role="progressbar" aria-valuenow="60" aria-valuemin="0" aria-valuemax="100" style="width: 60%;">
+        </div>
+      </div>
       <div class="quizInstruction">Type the following as fast as possible (case-sensitive):</div>
       <div class="quizWord" id="quizWord"></div>
     </div>

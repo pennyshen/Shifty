@@ -13,6 +13,7 @@ var typedKeys = "";
 var currentWord;
 
 var allWords = ["Penguins?", "Cats!"];
+var numWords;
 
 var shiftPressed = {
     "l": false,
@@ -29,6 +30,12 @@ function resetForQuiz() {
 }
 
 function displayNextWord() {
+    // set progress bar first
+    var progressBar = document.getElementById("progress-bar");
+    var progress = Math.floor(allWords.length*100.0/numWords);
+    progressBar.style.width = progress + "%";
+    progressBar.setAttribute("aria-valueNow", progress);
+
     if (allWords && allWords.length > 0) {
         var nextWord = allWords.shift();
         currentWord = nextWord;
@@ -217,6 +224,7 @@ function startQuiz() {
 
     allWords = getQuizWords();
     combineSymbolsWithKeys(allWords);
+    numWords = allWords.length;
     displayNextWord();
 }
 
