@@ -22,7 +22,7 @@ var shiftPressed = {
 
 var firebase = new Firebase("https://shifty-quiz.firebaseio.com/user-stats");
 
-var debugging = true;
+var debugging = false;
 
 function init() {
     initKeyboardConfig();
@@ -245,8 +245,10 @@ function shareResult() {
     });
     FB.ui({
       method: 'feed',
+      redirect_uri: 'https://whateverwhouare.github.io/Shifty/',
       link: 'https://whateverwhouare.github.io/Shifty/',
       caption: 'I use my left shift ' + leftShift + ' of the time, and my right shift ' + rightShift + ' of the time.',
+      description: 'Take a quiz to find out which shift key you use and when!'
     }, function(response){});
 }
 
@@ -266,7 +268,7 @@ function startQuiz() {
     document.documentElement.addEventListener("keydown", keyDownListener);
     document.documentElement.addEventListener("keyup", keyUpListener);
 
-    allWords = getQuizWords().slice(0,1);
+    allWords = getQuizWords();
     combineSymbolsWithKeys(allWords);
     numWords = allWords.length;
     displayNextWord();
