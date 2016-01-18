@@ -22,7 +22,7 @@ var shiftPressed = {
 
 var firebase = new Firebase("https://shifty-quiz.firebaseio.com/user-stats");
 
-var debugging = true;
+var debugging = false;
 
 function init() {
     initKeyboardConfig();
