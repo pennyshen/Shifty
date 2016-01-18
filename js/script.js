@@ -22,7 +22,7 @@ var shiftPressed = {
 
 var firebase = new Firebase("https://shifty-quiz.firebaseio.com/user-stats");
 
-var debugging = false;
+var debugging = true;
 
 function init() {
     initKeyboardConfig();
@@ -238,6 +238,7 @@ function showResult() {
 function finishQuiz() {
     document.documentElement.removeEventListener("keydown", keyDownListener);
     document.documentElement.removeEventListener("keyup", keyUpListener);
+    setElementVisibility("keyboardHint", true, true);
     clearAllHighlight();
     showResult();
 }
@@ -246,10 +247,11 @@ function startQuiz() {
     resetForQuiz();
     setElementVisibility("quizResult", false);
     setElementVisibility("quizPrompt", true);
+    setElementVisibility("keyboardHint", false, true);
     document.documentElement.addEventListener("keydown", keyDownListener);
     document.documentElement.addEventListener("keyup", keyUpListener);
 
-    allWords = getQuizWords();
+    allWords = getQuizWords().slice(0, 1);
     combineSymbolsWithKeys(allWords);
     numWords = allWords.length;
     displayNextWord();
@@ -275,12 +277,13 @@ function combineSymbolsWithKeys(words) {
     }
 }
 
-function setElementVisibility(id, isVisible) {
+function setElementVisibility(id, isVisible, occupySpace) {
     var element = document.getElementById(id);
+    var className = occupySpace ? "invisible" : "hide";
     if (isVisible) {
-        clearStyling(element, ["hide"]);
+        clearStyling(element, [className]);
     } else {
-        element.className += " hide";
+        element.className = element.className + " " + className;
     }
 }
 
