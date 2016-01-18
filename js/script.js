@@ -251,7 +251,7 @@ function startQuiz() {
     document.documentElement.addEventListener("keydown", keyDownListener);
     document.documentElement.addEventListener("keyup", keyUpListener);
 
-    allWords = getQuizWords().slice(0, 1);
+    allWords = getQuizWords();
     combineSymbolsWithKeys(allWords);
     numWords = allWords.length;
     displayNextWord();
