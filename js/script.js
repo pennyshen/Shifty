@@ -12,7 +12,7 @@ var currentWordResult = {};
 var typedKeys = "";
 var currentWord;
 
-var allWords = ["Penguins?", "Cats!"];
+var allWords = [];
 var numWords;
 
 var shiftPressed = {
@@ -20,18 +20,24 @@ var shiftPressed = {
     "r": false
 };
 
+var firebase = new Firebase("https://shifty-quiz.firebaseio.com/user-stats");
+
+var debugging = true;
 
 function init() {
+    initKeyboardConfig();
     var isMobile = /Android|webOS|iPhone|iPad|iPod|BlackBerry|IEMobile|Opera Mini/i.test(navigator.userAgent);
     if (!isMobile) {
         generateKeyboard();
-        console.log("mobile!");
     }
     setElementVisibility("mobileText", isMobile);
     setElementVisibility("startQuizButton", !isMobile);
 }
 
 function resetForQuiz() {
+    for (var i = 0; i < allShiftedKeys.length; i++) {
+        result[allShiftedKeys[i]] = [];
+    }
     shiftPressed["l"] = false;
     shiftPressed["r"] = false;
     currentWordResult = {};
@@ -202,6 +208,7 @@ function showResult() {
         "l": 0,
         "r": 0
     }
+    var loggedResult = {};
     for (key in result) {
         var locations = result[key];
         if (locations.length > 0) {
@@ -210,12 +217,21 @@ function showResult() {
             highlightElement(element, location);
             allShifts += 1;
             shiftCount[location] += 1;
+            loggedResult[keyToIdMap[key]] = location;
         }
     }
     for (var location in shiftCount) {
         var count = shiftCount[location];
         var percentage = Math.floor(count*100.0 / allShifts);
         document.getElementById(location + "_result").innerHTML = percentage + "% (" + count + "/" + allShifts + ")";
+    }
+
+    if (!debugging) {
+        firebase.push({
+            timestamp: (new Date()).getTime(),
+            shifCount: shiftCount,
+            result: loggedResult
+        });
     }
 }
 
@@ -233,7 +249,7 @@ function startQuiz() {
     document.documentElement.addEventListener("keydown", keyDownListener);
     document.documentElement.addEventListener("keyup", keyUpListener);
 
-    allWords = getQuizWords();
+    allWords = getQuizWords().slice(0, 1);
     combineSymbolsWithKeys(allWords);
     numWords = allWords.length;
     displayNextWord();
@@ -279,6 +295,8 @@ function generateKeyboard() {
         for (var textPos = 0; textPos < rowValues.length; textPos++) {
             var keyValue = rowValues[textPos];
             var keyElement = document.createElement("div");
+            // NOTE: THIS ID IS USED FOR LOGGING USER STATS - NEED TO 
+            //       SAVE NEW VERSION OF ID IN DATABASE IF WE CHANGE IT
             var id = "key_" + rowNum + "_" + textPos;
             keyElement.className = "key button";
             keyElement.id = id;
@@ -286,7 +304,6 @@ function generateKeyboard() {
             rowElement.appendChild(keyElement);
 
             keyToIdMap[keyValue] = id;
-            result[keyValue] = [];
 
             var unshiftedValue;
             if (keyValue.match(/[A-Z]/)) {

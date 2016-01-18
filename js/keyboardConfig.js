@@ -3,6 +3,14 @@ var keyboardValues = ["~!@#$%^&*()_+",
                       "ASDFGHJKL:\"",
                       "ZXCVBNM<>?"];
 
+var allShiftedKeys = "";
+
+function initKeyboardConfig() {
+  for (var i = 0; i < keyboardValues.length; i++) {
+    allShiftedKeys += keyboardValues[i];
+  }
+}
+
 // names of known key codes (0-255)
 var keyboardMap = [
   "", // [0]
