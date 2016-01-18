@@ -20,6 +20,17 @@ var shiftPressed = {
     "r": false
 };
 
+
+function init() {
+    var isMobile = /Android|webOS|iPhone|iPad|iPod|BlackBerry|IEMobile|Opera Mini/i.test(navigator.userAgent);
+    if (!isMobile) {
+        generateKeyboard();
+        console.log("mobile!");
+    }
+    setElementVisibility("mobileText", isMobile);
+    setElementVisibility("startQuizButton", !isMobile);
+}
+
 function resetForQuiz() {
     shiftPressed["l"] = false;
     shiftPressed["r"] = false;
@@ -292,6 +303,5 @@ function generateKeyboard() {
     }
 }
 
-generateKeyboard();
+init();
 
-// startQuiz();
