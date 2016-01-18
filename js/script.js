@@ -22,7 +22,7 @@ var shiftPressed = {
 
 var firebase = new Firebase("https://shifty-quiz.firebaseio.com/user-stats");
 
-var debugging = true;
+var debugging = false;
 
 function init() {
     initKeyboardConfig();
@@ -249,7 +249,7 @@ function startQuiz() {
     document.documentElement.addEventListener("keydown", keyDownListener);
     document.documentElement.addEventListener("keyup", keyUpListener);
 
-    allWords = getQuizWords().slice(0, 1);
+    allWords = getQuizWords();
     combineSymbolsWithKeys(allWords);
     numWords = allWords.length;
     displayNextWord();
