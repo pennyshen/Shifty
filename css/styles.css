@@ -43,12 +43,16 @@
     background: #ffeccc;
 }
 
-.tryAgain {
+.resultButtons {
     margin-top: 35px;
     font-size: 22px;
+}
+
+.resultButtons .button {
     display: inline-block;
     padding: 8px 20px;
-    background: #ffeccc;    
+    background: #ffeccc;
+    margin: 0 5px;
 }
 
 .clickable:hover {

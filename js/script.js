@@ -22,7 +22,7 @@ var shiftPressed = {
 
 var firebase = new Firebase("https://shifty-quiz.firebaseio.com/user-stats");
 
-var debugging = false;
+var debugging = true;
 
 function init() {
     initKeyboardConfig();
@@ -235,6 +235,21 @@ function showResult() {
     }
 }
 
+function shareResult() {
+    var leftShift = document.getElementById("l_result").innerHTML.split(" ")[0];
+    var rightShift = document.getElementById("r_result").innerHTML.split(" ")[0];
+    FB.init({
+      appId      : '950073621728512',
+      xfbml      : true,
+      version    : 'v2.5'
+    });
+    FB.ui({
+      method: 'feed',
+      link: 'https://whateverwhouare.github.io/Shifty/',
+      caption: 'I use my left shift ' + leftShift + ' of the time, and my right shift ' + rightShift + ' of the time.',
+    }, function(response){});
+}
+
 function finishQuiz() {
     document.documentElement.removeEventListener("keydown", keyDownListener);
     document.documentElement.removeEventListener("keyup", keyUpListener);
@@ -251,7 +266,7 @@ function startQuiz() {
     document.documentElement.addEventListener("keydown", keyDownListener);
     document.documentElement.addEventListener("keyup", keyUpListener);
 
-    allWords = getQuizWords();
+    allWords = getQuizWords().slice(0,1);
     combineSymbolsWithKeys(allWords);
     numWords = allWords.length;
     displayNextWord();
