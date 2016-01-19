@@ -242,7 +242,6 @@ function shareResult() {
     var params = {
         name: "I use left shift " + leftShift + " of the time and \nmy right shift " + rightShift + " of the time.",
         description: "Which shift key do you use? Take a quiz to find out!",
-        picture: "https://whateverwhouare.github.io/Shifty/Shifty.png",
         redirect_uri: "https://www.facebook.com",
         link: "https://whateverwhouare.github.io/Shifty/"
     };
