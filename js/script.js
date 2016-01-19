@@ -238,18 +238,20 @@ function showResult() {
 function shareResult() {
     var leftShift = document.getElementById("l_result").innerHTML.split(" ")[0];
     var rightShift = document.getElementById("r_result").innerHTML.split(" ")[0];
-    FB.init({
-      appId      : '950073621728512',
-      xfbml      : true,
-      version    : 'v2.5'
-    });
-    FB.ui({
-      method: 'feed',
-      redirect_uri: 'https://whateverwhouare.github.io/Shifty/',
-      link: 'https://whateverwhouare.github.io/Shifty/',
-      caption: 'I use my left shift ' + leftShift + ' of the time, and my right shift ' + rightShift + ' of the time.',
-      description: 'Take a quiz to find out which shift key you use and when!'
-    }, function(response){});
+
+    var params = {
+        name: "I use left shift " + leftShift + " of the time and \nmy right shift " + rightShift + " of the time.",
+        description: "Which shift key do you use? Take a quiz to find out!",
+        picture: "Shifty.png",
+        redirect_uri: "https://www.facebook.com",
+        link: "https://whateverwhouare.github.io/Shifty/"
+    };
+
+    var facebookShareURI = "https://www.facebook.com/dialog/feed?app_id=950073621728512&ref=site&display=page";
+    for (paramName in params) {
+        facebookShareURI = facebookShareURI + "&" + paramName + "=" + encodeURIComponent(params[paramName]);
+    }
+    window.open(facebookShareURI);
 }
 
 function finishQuiz() {
@@ -341,4 +343,3 @@ function generateKeyboard() {
 }
 
 init();
-
