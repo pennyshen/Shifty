@@ -186,7 +186,7 @@ var keyboardMap = [
   "ASTERISK", // [170]
   "PLUS", // [171]
   "PIPE", // [172]
-  "HYPHEN_MINUS", // [173]
+  "-", // [173]
   "OPEN_CURLY_BRACKET", // [174]
   "CLOSE_CURLY_BRACKET", // [175]
   "TILDE", // [176]

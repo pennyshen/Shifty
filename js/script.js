@@ -138,6 +138,7 @@ function keyDownListener(e) {
     if (key === "SHIFT") {
         setShiftPressed(e, true);
     } else if (key in unshiftedToShiftedMap) {
+        e.preventDefault();
         setHighlight(e, true);
         var actualKey = e.shiftKey ? unshiftedToShiftedMap[key] : key;
         typedKeys += actualKey;
