@@ -1,7 +1,5 @@
 var keyToIdMap = {};
 var unshiftedToShiftedMap = {};
-var symbolsUnshifted = "`1234567890-=[]\\;',./";
-var allKeysShifted = "";
 
 var DOM_KEY_LOCATION_LEFT = 1;
 var DOM_KEY_LOCATION_RIGHT = 2;
@@ -102,8 +100,8 @@ function setHighlight(e, toHighlight) {
 }
 
 function clearAllHighlight() {
-    for (var i = 0; i < allKeysShifted.length; i++) {
-        clearHighlight(getKeyElement(allKeysShifted[i], true));
+    for (var i = 0; i < allShiftedKeys.length; i++) {
+        clearHighlight(getKeyElement(allShiftedKeys[i], true));
     }
 }
 
@@ -146,6 +144,8 @@ function keyDownListener(e) {
             recordResult(actualKey);
         }
         checkWord();
+    } else if (key === "BACK_SPACE"){
+        e.preventDefault();
     }
 }
 
@@ -240,17 +240,17 @@ function shareResult() {
     var leftShift = document.getElementById("l_result").innerHTML.split(" ")[0];
     var rightShift = document.getElementById("r_result").innerHTML.split(" ")[0];
 
-    var params = {
-        name: "I use left shift " + leftShift + " of the time and \nmy right shift " + rightShift + " of the time.",
-        description: "Which shift key do you use? Take a quiz to find out!",
-        redirect_uri: "https://www.facebook.com",
-        link: "https://whateverwhouare.github.io/Shifty/"
-    };
+    var name = "I use left shift " + leftShift + " of the time and \nmy right shift " + rightShift + " of the time."; 
+    var description = "Which shift key do you use? Take a quiz to find out!";
+    var redirect_uri = "https://whateverwhouare.github.io/Shifty/";
+    var link = "https://whateverwhouare.github.io/Shifty/";
 
-    var facebookShareURI = "https://www.facebook.com/dialog/feed?app_id=950073621728512&ref=site&display=page";
-    for (paramName in params) {
-        facebookShareURI = facebookShareURI + "&" + paramName + "=" + encodeURIComponent(params[paramName]);
-    }
+    var facebookShareURI = "https://www.facebook.com/dialog/feed?app_id=950073621728512"
+        + "&display=popup"
+        + "&name=" + encodeURIComponent(name)
+        + "&description=" + encodeURIComponent(description)
+        + "&link=" + encodeURIComponent(link)
+        + "&redirect_uri=" + redirect_uri;
     window.open(facebookShareURI);
 }
 
@@ -271,6 +271,9 @@ function startQuiz() {
     document.documentElement.addEventListener("keyup", keyUpListener);
 
     allWords = getQuizWords();
+    if (debugging) {
+        allWords = allWords.slice(0, 1);
+    }
     combineSymbolsWithKeys(allWords);
     numWords = allWords.length;
     displayNextWord();
@@ -313,7 +316,6 @@ function generateKeyboard() {
         var rowValues = keyboardValues[rowNum];
         var rowElement = document.createElement("div");
         rowElement.className = "row row" + rowNum;
-        allKeysShifted += rowValues;
         for (var textPos = 0; textPos < rowValues.length; textPos++) {
             var keyValue = rowValues[textPos];
             var keyElement = document.createElement("div");
@@ -342,4 +344,18 @@ function generateKeyboard() {
     }
 }
 
+function analyzeResult() {
+    firebase.once("value", function(dataSnapShot) {
+        var timestart = Date.now();
+        var data = dataSnapShot.val();
+        var count = 0;
+        for (key in data) {
+            count++;
+        }
+        console.log(count);
+        var timeEnd = Date.now();
+    });
+}
+
 init();
+analyzeResult();

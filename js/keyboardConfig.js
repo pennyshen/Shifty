@@ -1,3 +1,5 @@
+var symbolsUnshifted = "`1234567890-=[]\\;',./";
+
 var keyboardValues = ["~!@#$%^&*()_+",
                       "QWERTYUIOP{}|",
                       "ASDFGHJKL:\"",
